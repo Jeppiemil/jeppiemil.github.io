@@ -1,8 +1,9 @@
 ---
 layout: post
 title:  "My first post to the blog"
+permalink: /0/
 date:   2022-07-06 00:39:36 +0530
-categories: Javascript NodeJS
+
 ---
 I am so proud of myself creating this github blog by myself (with the help of universe a.k.a. stackoverflow of course)
 
