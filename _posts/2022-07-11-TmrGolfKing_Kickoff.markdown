@@ -1,7 +1,8 @@
 ---
 layout: post
 title:  "TmrGolfKing_Kickoff"
-date:   2020-07-11 21:03:36 +0530
+excerpt: "내일은 나도 골프왕 프로젝트 소개"
+date:   2022-07-11 21:03:36 +0530
 categories: React Python Flask
 ---
 ## 우리 조 프로젝트 제목
