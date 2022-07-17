@@ -63,7 +63,7 @@ def main(userhash):
 ```
 When an user accesses to the main page, automatically check the token. If there is one - otherwise redirect back to login page - decode with the KEY, retreive the id we stored and compare to the userhash on url. Long story short, url user info should be same with the token user info.
 
-We can insert the html block to show the contents only for those who got the right token: {% if status %} {% endif %} 
+We can insert the html block to show the contents only for those who got the right token: `{% if status %} {% endif %}`
 
 
 ## API
