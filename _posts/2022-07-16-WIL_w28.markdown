@@ -44,7 +44,7 @@ def sign_in():
 When signing in, get the input value (username/password), hash password to encode as we saved, try to find the value from the users db.
 
 If there is an user with the same username/password, issue a token owning the username and expiration (lasts 24h in this case), which is encoded using the SECRET_KEY 
-** This is the main reason why we use jwt: if KEY not known, other server cannot decode the token, but only our server **
+*This is the main reason why we use jwt: if KEY not known, other server cannot decode the token, but only our server*
 
 ```python
 @app.route("/main/<userhash>", methods=['GET'])
