@@ -1,0 +1,100 @@
+---
+layout: post
+title:  "WIL_w28"
+excerpt: "Weekly I learned on week 28"
+date:   2022-07-16 21:03:36 +0530
+categories: Python Flask
+---
+## JWT
+
+```python
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+    # 로그인
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+    userhash = hashlib.sha256(username_receive.encode('utf-8')).hexdigest()
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+        payload = {
+            'id': username_receive,
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        try:
+            token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+        except AttributeError:
+            token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
+        return jsonify({'result': 'success', 'token': token, 'userhash': userhash})
+
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
+```
+
+When signing in, get the input value (username/password), hash password to encode as we saved, try to find the value from the users db.
+
+If there is an user with the same username/password, issue a token owning the username and expiration (lasts 24h in this case), which is encoded using the SECRET_KEY 
+** This is the main reason why we use jwt: if KEY not known, other server cannot decode the token, but only our server **
+
+```python
+@app.route("/main/<userhash>", methods=['GET'])
+def main(userhash):
+    token_receive = request.cookies.get('mytoken')
+    user_info = db.users.find_one({"userhash": userhash}, {"_id": False})
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        status = user_info["username"] == payload["id"]  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+#...
+        return render_template("main.html", user_info=user_info, average_score=int(average_score), status=status)
+
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+```
+When an user accesses to the main page, automatically check the token. If there is one - otherwise redirect back to login page - decode with the KEY, retreive the id we stored and compare to the userhash on url. Long story short, url user info should be same with the token user info.
+
+```html
+{% if status %}
+{% endif %}
+```
+
+We can insert the html block to show the contents only for those who got the right token.
+
+
+## API
+
+We tried mongodb atlas API to store the data connecting with the server (flask)
+
+```python
+from pymongo import MongoClient
+import certifi
+
+ca = certifi.where()
+
+client = MongoClient('...key', tlsCAFile=ca)
+db = client.dbsparta
+```
+```python
+# To find all the result satisfying the conditions: in this case right userhash
+score_list = list(db.golf_scores.find({"userhash": userhash}, {'_id': False}))
+# To find only one item satisfying the conditions
+user_info = db.users.find_one({"userhash": userhash}, {"_id": False})
+# To insert a document in the db
+db.golf_scores.insert_one(doc)
+# To update a document
+db.users.update_one({'userhash': userhash_receive}, {'$set': new_doc})
+```
+
+API is a type of communication between our server and other software system. (such as weather status, address finder)
+Even some of them are free, if too many requests made, it should burden the server, so normally providers issue the "key" to users so that it could be controlled.
+
+I tried 
+[Naver Papago API](https://developers.naver.com/docs/papago/README.md) on my personal translation project. 
+
+## Next week overview
+
+It must contains a lot of java. We are practicing algorithms with it and I already started hating it. 😂
