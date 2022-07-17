@@ -5,6 +5,12 @@ excerpt: "Weekly I learned on week 28"
 date:   2022-07-16 21:03:36 +0530
 categories: Python Flask
 ---
+Innovation camp has started and there was a mini-project assignment. We - team 11 - built a web service where users can sign up, sign in, register their records, check everyone's record including the tier, check their own record in mypage.
+
+I almost forgot how hard it was to work with other. How could I? It has been just a year I've suffered from master program, ahaha. 😂 Still as we could not work on our own alone, so communication/efficient coworking method is something I should learn forever.
+
+Below are something I learnt this week.
+
 ## JWT
 
 ```python
@@ -57,7 +63,7 @@ def main(userhash):
 ```
 When an user accesses to the main page, automatically check the token. If there is one - otherwise redirect back to login page - decode with the KEY, retreive the id we stored and compare to the userhash on url. Long story short, url user info should be same with the token user info.
 
-```html
+```
 {% if status %}
 {% endif %}
 ```
