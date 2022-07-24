@@ -1,0 +1,62 @@
+---
+layout: post
+title:  "WIL_w29"
+excerpt: "Weekly I learned on week 29"
+date:   2022-07-23 21:03:36 +0530
+categories: Java WIL
+---
+Still in innovation camp. Assignment of this week was to solve algorithms and build an object oriented program in java.
+Learnt java from the scratch so it has been a hard time for a while. 
+
+## Object oriented program
+
+```java
+package com.example.publictransportation;
+public class PublicTransportation {
+    static int count;
+    int default_price;
+    int uniqueID;
+
+    public PublicTransportation(){ // Constructor
+        count += 1;
+        this.default_price=1000;
+        this.uniqueID = count;
+        System.out.printf("교통수단 ID <%s> 가 생성되었습니다.%n", this.uniqueID);
+    }
+    public void Drive(int status, int gas_consumption){
+        ...
+        if (this.cur_gas < 10 && this.cur_gas > 0){
+            System.out.println("주유량 10 미만. 주유가 필요합니다");
+        ...
+...
+```
+
+OOP allows you to create separate objects functioning as the defined class (which owns its own arguments).
+Even String is a class in java, which was quite a surprise for me.
+
+```java
+package com.example.bus;
+import com.example.publictransportation.PublicTransportation;
+public class Bus extends PublicTransportation {
+
+    public Bus(){
+        ...
+    }
+}
+```
+Class can be inherited from another class by declaring it with the keyword "extends". 
+In java (as far as I understood) one class can be inherited from only one another class, while it can inherit multiple classes.
+I haven't used yet, however, when inheriting an abstract class, you must declare the methods you want to use.
+
+## JVM
+
+Java is not dependent on OS, so CPU cannot understand .java file. When Java compiler transfrom .java file to .class file which contains only bytecode, Java Virtual Machine help OS to understand it.
+
+## Algorithm test presentation video
+
+https://youtu.be/SogYFI4r8E4
+https://youtu.be/QxuUUXgPEXI
+
+## Next week overview
+
+Deeper understanding on java and learn java spring
